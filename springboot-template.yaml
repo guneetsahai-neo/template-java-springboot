@@ -58,7 +58,9 @@ spec:
       name: Fetch Temlate
       action: fetch:template
       input:
-        url: https://github.com/guneetsahai-neo/template-java-springboot
+        url: ./skeleton
+        copyWithoutRender: 
+          - .github/workflows/*
         values:
           component_id: ${{ parameters.component_id }}
           description: ${{ parameters.description }}
