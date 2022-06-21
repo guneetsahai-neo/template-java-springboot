@@ -1,0 +1,98 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: template-java-springboot
+  title: Java Springboot Template 
+  description: Demo Template with Java Springboot
+spec:
+  owner: team-a
+  type: website
+
+  parameters:
+    - title: Fill in Basic Information
+      required:
+        - component_id
+        - java_package_name
+        - owner
+      properties:
+        component_id:
+          title: Name
+          type: string
+          description: Unique name of the component
+          ui:field: EntityNamePicker
+          ui:autofocus: true
+        java_package_name:
+          title: Java Package Name
+          type: string
+          description: Name for the java package. eg (io.backstage.blah)
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this website is for.
+        owner:
+          title: Entity Owner
+          type: string
+          description: Owner of the Entity in Backastage
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds: [Group]
+        application_port:
+          title: Application Port
+          type: integer
+          description: The port number on which the application would listen
+    
+    - title: Choose Github Location
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+  
+  steps:
+    - id: fetch
+      name: Fetch Temlate
+      action: fetch:template
+      input:
+        url: https://github.com/guneetsahai-neo/template-java-springboot
+        values:
+          component_id: ${{ parameters.component_id }}
+          description: ${{ parameters.description }}
+          artifact_id: ${{ parameters.component_id }}
+          owner: ${{ parameters.owner }}
+          java_package_name: ${{ parameters.java_package_name }}
+          http_port: ${{ parameters.application_port }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+
+
+    - id: log
+      name: Logs Message
+      action: debug:log
+      input: 
+        message: Fetched Templated Details from github
+
+    - id: publish
+      name: Publish On Github
+      action: publish:github
+      input:
+        repoUrl: ${{ parameters.repoUrl }}
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: '/backstage/catalog-info.yaml'
+
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}
