@@ -30,9 +30,9 @@ spec:
         - application_port
       properties:
         java_package_name:
-          title: Java Package Name
+          title: Java Sub Package Name 
           type: string
-          description: Name for the java package. eg (io.backstage.blah)
+          description: Complete Java Package Name will be "com.example.*" where * will be replaced with the value of this field
         application_port:
           title: Application Port
           type: integer
