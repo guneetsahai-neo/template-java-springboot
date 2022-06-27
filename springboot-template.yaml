@@ -9,33 +9,30 @@ spec:
   type: website
 
   parameters:
-    - title: Fill in Basic Information
+    - title: Basic Configuration
       required:
         - component_id
-        - java_package_name
-        - owner
       properties:
         component_id:
           title: Name
           type: string
-          description: Unique name of the component
+          description: Unique name of the component. This will be used as java artifact id and backstage catalog information 
           ui:field: EntityNamePicker
           ui:autofocus: true
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this website is for. Will be used in generated documentation
+
+    - title: SpringBoot Configuration
+      required:
+        - java_package_name
+        - application_port
+      properties:
         java_package_name:
           title: Java Package Name
           type: string
           description: Name for the java package. eg (io.backstage.blah)
-        description:
-          title: Description
-          type: string
-          description: Help others understand what this website is for.
-        owner:
-          title: Entity Owner
-          type: string
-          description: Owner of the Entity in Backastage
-          ui:field: OwnerPicker
-          ui:options:
-            allowedKinds: [Group]
         application_port:
           title: Application Port
           type: integer
@@ -52,6 +49,19 @@ spec:
           ui:options:
             allowedHosts:
               - github.com
+
+    - title: Backstage Catalog Item Configuration
+      required:
+        - owner
+      properties:
+        owner:
+          title: Entity Owner
+          type: string
+          description: Owner of the Created Entity in Backastage
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds: [Group]
+
   
   steps:
     - id: fetch
