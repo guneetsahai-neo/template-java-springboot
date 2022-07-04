@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME : {% raw mydummyapp:${{github.run_number}} %}
+  IMAGE_NAME : {% raw %} mydummyapp:${{github.run_number}} {% endraw %}
   
 jobs:
 
@@ -26,9 +26,9 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ~/.m2/repository
-        key: {% raw ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }} %}
+        key: {% raw %} ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }} {% endraw %}
         restore-keys: |
-          {% raw ${{ runner.os }}-maven- %}
+          {% raw %} ${{ runner.os }}-maven- {% endraw %}
 
     - name: Echo cache hit
       if: steps.cache.outputs.cache-hit != 'true'
@@ -38,7 +38,7 @@ jobs:
       run: mvn --batch-mode --update-snapshots package        
     
     - name: docker Login to Jfrog
-      run: {% raw echo ${{secrets.JFROG_API_KEY}} | docker login -uguneet.sahai@statusneo.com --password-stdin guneetsahaineo.jfrog.io %}
+      run: {% raw %} echo ${{secrets.JFROG_API_KEY}} | docker login -uguneet.sahai@statusneo.com --password-stdin guneetsahaineo.jfrog.io {% endraw %}
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag guneetsahaineo.jfrog.io/default-docker-virtual/$IMAGE_NAME    
