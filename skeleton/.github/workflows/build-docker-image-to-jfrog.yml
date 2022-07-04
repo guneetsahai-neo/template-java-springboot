@@ -41,10 +41,10 @@ jobs:
       run: {% raw %} echo ${{secrets.JFROG_API_KEY}} {% endraw %} | docker login -u${{values.jfrog_username}} --password-stdin ${{ values.jfrog_domain }} 
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ values.jfrog_domain }}/${{values.jfrog_reponame}/$IMAGE_NAME
+      run: docker build . --file Dockerfile --tag ${{ values.jfrog_domain }}/${{values.jfrog_reponame}}/$IMAGE_NAME
 
     - name: docker Push Image to Jfrog
-      run: docker push ${{values.jfrog_domain}}/${{values.jfrog_reponame}/$IMAGE_NAME
+      run: docker push ${{values.jfrog_domain}}/${{values.jfrog_reponame}}/$IMAGE_NAME
 
     - name: docker logout
       run: docker logout
