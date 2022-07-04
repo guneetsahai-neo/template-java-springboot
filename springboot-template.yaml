@@ -90,6 +90,7 @@ spec:
       action: publish:github
       input:
         repoUrl: ${{ parameters.repoUrl }}
+        repoVisibility: public 
 
     - id: register
       name: Register
