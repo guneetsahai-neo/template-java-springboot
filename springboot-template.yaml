@@ -50,6 +50,23 @@ spec:
             allowedHosts:
               - github.com
 
+    - title: jFrog Configuration
+      required: 
+        - jfrogUrl
+      properties:
+          jfrogDomain:
+            title: JFrog Domain (In the form *.jfrog.io)
+            type: string
+            description: Domain of the JFrog Repository 
+          jfrogUserName:
+            title: JFrog UserName
+            type: string
+            description: JFrog User Name 
+          jfrogRepoName: 
+            title: JFrog Repository Name
+            type: string
+            description: JFrog Repository Name
+
     - title: Backstage Catalog Item Configuration
       required:
         - owner
@@ -77,6 +94,9 @@ spec:
           java_package_name: ${{ parameters.java_package_name }}
           http_port: ${{ parameters.application_port }}
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          jfrog_domain: ${{parameters.jfrogDomain}}
+          jfrog_username: ${{parameters.jfrogUserName}}
+          jfrog_reponame: ${{parameters.jfrogRepoName}}
 
 
     - id: log
