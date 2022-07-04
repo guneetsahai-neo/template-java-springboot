@@ -52,7 +52,9 @@ spec:
 
     - title: jFrog Configuration
       required: 
-        - jfrogUrl
+        - jfrogDomain
+        - jfrogUserName
+        - jfrogRepoName
       properties:
           jfrogDomain:
             title: JFrog Domain (In the form *.jfrog.io)
