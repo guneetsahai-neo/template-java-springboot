@@ -99,6 +99,7 @@ spec:
           jfrog_domain: ${{parameters.jfrogDomain}}
           jfrog_username: ${{parameters.jfrogUserName}}
           jfrog_reponame: ${{parameters.jfrogRepoName}}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
 
 
     - id: log
