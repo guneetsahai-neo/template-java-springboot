@@ -48,3 +48,16 @@ jobs:
 
     - name: docker logout
       run: docker logout
+    
+    - uses: azure/aks-set-context@v1
+        with:
+          creds: {% raw %} echo ${{secrets.AZURE}} {% endraw %}
+          cluster-name: mckinsey
+          resource-group: rearportal
+        
+    - name: Kubernetes Deployment
+      uses: azure/k8s-deploy@v1
+      with:
+        manifests: |
+          kubernetes.yaml
+        namespace: default
