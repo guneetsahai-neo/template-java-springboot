@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: ${{values.component_id}}
-        image: ${{values.jfrog_domain}}/${{values.jfrog_reponame}/${{values.destination.owner}}/${{values.destination.repo}}:1
+        image: ${{values.jfrog_domain + "/" + values.jfrog_reponame + "/" + values.destination.owner + "/" + values.destination.repo + ":1"}}
         ports:
         - containerPort: ${{values.http_port}}
 ---

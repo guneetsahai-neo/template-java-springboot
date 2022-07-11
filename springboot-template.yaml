@@ -59,15 +59,18 @@ spec:
           jfrogDomain:
             title: JFrog Domain (In the form *.jfrog.io)
             type: string
-            description: Domain of the JFrog Repository 
+            description: Domain of the JFrog Repository
+            default: noicecurse.jfrog.io
           jfrogUserName:
             title: JFrog UserName
             type: string
-            description: JFrog User Name 
+            description: JFrog User Name
+            default: nishkarsh.raj@statusneo.com 
           jfrogRepoName: 
             title: JFrog Repository Name
             type: string
             description: JFrog Repository Name
+            default: default-docker-local
 
     - title: Backstage Catalog Item Configuration
       required:
