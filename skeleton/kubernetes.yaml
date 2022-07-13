@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${{values.component_id}}
+spec:
+  replicas: ${{values.kube_replica_count}}
+  selector:
+    matchLabels:
+      app: ${{values.component_id}}
+  template:
+    metadata:
+      labels:
+        app: ${{values.component_id}}
+    spec:
+      containers:
+      - name: ${{values.component_id}}
+        image: ${{values.jfrog_domain + "/" + values.jfrog_reponame + "/" + values.destination.owner + "/" + values.destination.repo + ":1"}}
+        ports:
+        - containerPort: ${{values.http_port}}
+      imagePullSecrets:
+        - name: jfrog
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${{values.component_id}}
+spec:
+  type: LoadBalancer
+  ports:
+  - port: ${{values.http_port}}
+  selector:
+    app: ${{values.component_id}}
